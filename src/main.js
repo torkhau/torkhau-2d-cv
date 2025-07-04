@@ -1,54 +1,53 @@
-import { background, kCtx } from './core';
-import { clampCamera, onScroll } from './utils';
+import { kCtx } from './core';
+import { Player } from './models';
+import { isPointInPolygon, onScroll, toWorldPolygon } from './utils';
 
-kCtx.setBackground(...background, 0.3);
-kCtx.loadSprite('brest', '/levels/brest.png');
+// function drawPolygonOutline(polygon, color = kCtx.rgb(255, 0, 0)) {
+//   kCtx.add([
+//     kCtx.pos(0, 0),
+//     kCtx.z(1000),
+//     {
+//       draw() {
+//         kCtx.drawLines({
+//           pts: polygon,
+//           width: 2,
+//           color,
+//           closed: true,
+//         });
+//       },
+//     },
+//   ]);
+// }
+
 
 let currentZoom = 1;
 
-let isDragging = false;
-let prevMouse = kCtx.vec2(0, 0);
+kCtx.scene('main', async () => {
+  const mapData = await (await fetch('/levels/brest.json')).json();
+  const allowedPathPolygon = toWorldPolygon(mapData);
+  kCtx.add([kCtx.sprite('brest'), kCtx.pos(0, 0)]);
 
-let bgWidth = 0;
-let bgHeight = 0;
+  const player = new Player();
+  let lastValidPos = player.pos.clone();
 
-kCtx.scene('main', () => {
-  const mapSprite = kCtx.add([kCtx.sprite('brest'), kCtx.pos(0, 0)]);
-
-  bgWidth = mapSprite.width;
-  bgHeight = mapSprite.height;
-
-  kCtx.camPos(kCtx.vec2(bgWidth / 2, bgHeight / 2));
   kCtx.camScale(currentZoom);
 
-  clampCamera(kCtx, currentZoom, { bgWidth, bgHeight });
-
   kCtx.onScroll(({ y }) => {
-    currentZoom = onScroll(y, kCtx, currentZoom, { bgWidth, bgHeight });
-  });
-
-  kCtx.onMousePress(() => {
-    isDragging = true;
-    prevMouse = kCtx.mousePos();
-  });
-
-  kCtx.onMouseRelease(() => {
-    isDragging = false;
+    currentZoom = onScroll(y, kCtx, currentZoom);
   });
 
   kCtx.onUpdate(() => {
-    if (isDragging) {
-      const nowMouse = kCtx.mousePos();
-      const deltaScreen = nowMouse.sub(prevMouse);
-      const deltaWorld = deltaScreen.scale(-1 / currentZoom);
-      const newCam = kCtx.camPos().add(deltaWorld);
+    const footPos = player.pos.add(kCtx.vec2(0, player.height / 4));
 
-      kCtx.camPos(newCam);
-
-      prevMouse = nowMouse;
-      clampCamera(kCtx, currentZoom, { bgWidth, bgHeight });
+    if (!isPointInPolygon(footPos, allowedPathPolygon)) {
+      player.pos = lastValidPos.clone();
+    } else {
+      lastValidPos = player.pos.clone();
     }
+
+    kCtx.camPos(player.pos);
   });
+
 });
 
 kCtx.go('main');
