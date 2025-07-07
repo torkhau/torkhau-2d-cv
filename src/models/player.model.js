@@ -1,15 +1,29 @@
 import { cellSize, kCtx } from '../core';
 
 export class Player {
-  _player = null;
-  _speed = 100;
-  _direction = 'right';
+  #player = null;
+  #speed = 100;
+  #direction = 'right';
+  #moveTarget = null;
+  #moveTolerance = 0.1 * cellSize;
+  #movement = {
+    left: () => {
+      this.#setDirection('left');
+      this.#player.move(-this.#speed, 0);
+    },
+    right: () => {
+      this.#setDirection('right');
+      this.#player.move(this.#speed, 0);
+    },
+    up: () => this.#player.move(0, -this.#speed),
+    down: () => this.#player.move(0, this.#speed),
+  };
 
   constructor(baseX = 23, baseY = 53) {
     this._baseX = baseX;
     this._baseY = baseY;
 
-    this._player = kCtx.make([
+    this.#player = kCtx.make([
       kCtx.sprite('player', { anim: 'idle' }),
       kCtx.pos(this._baseX * cellSize, this._baseY * cellSize),
       kCtx.area(),
@@ -17,9 +31,9 @@ export class Player {
       kCtx.anchor('center'),
     ]);
 
-    this._bindControls();
+    this.#bindControls();
 
-    kCtx.add(this._player);
+    kCtx.add(this.#player);
   }
 
   static async preload() {
@@ -33,52 +47,72 @@ export class Player {
     });
   }
 
-  _bindControls() {
+  #bindControls() {
     kCtx.onKeyRelease(() => {
-      if (this._player.curAnim() === 'walk') this._player.play('idle');
+      if (this.#player.curAnim() === 'walk') this.#player.play('idle');
     });
 
     kCtx.onKeyDown((key) => {
       if (!['left', 'right', 'up', 'down'].includes(key)) return;
 
-      const movement = {
-        left: () => {
-          this._setDirection('left');
-          this._player.move(-this._speed, 0);
-        },
-        right: () => {
-          this._setDirection('right');
-          this._player.move(this._speed, 0);
-        },
-        up: () => this._player.move(0, -this._speed),
-        down: () => this._player.move(0, this._speed),
-      };
-
-      movement[key]?.();
-
-      if (this._player.curAnim() !== 'walk') {
-        this._player.play('walk');
-      }
+      this.#movement[key]?.();
+      this.#setWalk();
     });
   }
 
-  _setDirection(dir) {
-    if (this._direction === dir) return;
+  #setDirection(dir) {
+    if (this.#direction === dir) return;
 
-    this._direction = dir;
+    this.#direction = dir;
     const scaleX = dir === 'left' ? -1 : 1;
-    this._player.use(kCtx.scale(scaleX, 1));
+    this.#player.use(kCtx.scale(scaleX, 1));
+  }
+
+  #setWalk() {
+    if (this.#player.curAnim() !== 'walk') this.#player.play('walk');
+  }
+
+  moveTo(pos) {
+    this.#moveTarget = pos.clone();
+    this.#setWalk();
+  }
+
+  stop() {
+    this.#moveTarget = null;
+    this.#player.play('idle');
+  }
+
+  update() {
+    if (!this.#moveTarget) return;
+
+    const dir = this.#moveTarget.sub(this.#player.pos);
+    const dist = dir.len();
+
+    if (dist <= this.#moveTolerance) {
+      this.#moveTarget = null;
+      this.#player.play('idle');
+      return;
+    }
+
+    const step = dir.unit().scale(this.#speed);
+    this.#player.move(step);
+
+    if (Math.abs(dir.x) > Math.abs(dir.y)) {
+      this.#setDirection(dir.x < 0 ? 'left' : 'right');
+    }
   }
 
   get pos() {
-    return this._player.pos;
+    return this.#player.pos;
   }
 
   set pos(value) {
-    this._player.pos = value;
+    this.#player.pos = value;
   }
 
   get height() {
-    return this._player.height;
+    return this.#player.height;
   }
 }
+
+await Player.preload();

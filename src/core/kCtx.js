@@ -1,5 +1,5 @@
 import kaboom from 'kaboom';
-import { background } from './const';
+import { background, levelFolder } from './const';
 import { Player } from '../models';
 
 export const kCtx = kaboom({
@@ -9,5 +9,4 @@ export const kCtx = kaboom({
 })
 
 kCtx.setBackground(...background, 0.3);
-await kCtx.loadSprite('brest', '/levels/brest.png');
-await Player.preload();
+await kCtx.loadSprite('Belarus', `${levelFolder}/belarus.png`);
