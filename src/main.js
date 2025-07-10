@@ -1,4 +1,9 @@
-import { Belarus } from './models';
+import { Belarus, Poland, RoomManager } from './models';
 
-const belarus = new Belarus();
-await belarus.start(23, 53)
+export const roomManager = new RoomManager({
+  Belarus: new Belarus(),
+  Poland: new Poland(),
+});
+
+await roomManager.initRooms();
+roomManager.startRoom('Belarus', 23, 53);

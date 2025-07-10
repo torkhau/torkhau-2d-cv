@@ -1,5 +1,7 @@
-import { kCtx, levelFolder, maxZoom, minZoom, zoomFactor } from '../core';
+import { cellSize, kCtx, levelFolder, maxZoom, minZoom, zoomFactor } from '../core';
+import { isPointInPolygon } from '../utils';
 import { Player } from './player.model';
+import { RoomManager } from './roomManager.model';
 
 export class Room {
   #name = '';
@@ -7,29 +9,14 @@ export class Room {
   #player = null;
   #mapPath = '';
   #polygon = [];
+  #spawnPos = kCtx.vec2(0, 0);
   #lastValidPos = {};
+  _roomManager = null;
+  _spawnPoints = [];
 
   constructor(name, mapPath) {
     this.#name = name;
     this.#mapPath = mapPath;
-  }
-
-  #isPointInPolygon(point) {
-    let inside = false;
-
-    for (let i = 0, j = this.#polygon.length - 1; i < this.#polygon.length; j = i++) {
-      const xi = this.#polygon[i].x;
-      const yi = this.#polygon[i].y;
-      const xj = this.#polygon[j].x;
-      const yj = this.#polygon[j].y;
-
-      const intersect =
-        yi > point.y !== yj > point.y && point.x < ((xj - xi) * (point.y - yi)) / (yj - yi + 0.00001) + xi;
-
-      if (intersect) inside = !inside;
-    }
-
-    return inside;
   }
 
   #onZoom(delta) {
@@ -48,23 +35,25 @@ export class Room {
   }
 
   async #loadMap() {
-    const mapData = await (await fetch(`${levelFolder}/${this.#mapPath}`)).json();
-    this.#polygon = mapData.polygon.map(({ x, y }) => kCtx.vec2(x, y).add(kCtx.vec2(mapData.x, mapData.y)));
+    const [mapData, ...spawnPoints] = await (await fetch(`${levelFolder}/${this.#mapPath}`)).json();
+    this.#polygon = mapData.polygon.map(({ x, y }) => kCtx.vec2(x, y).add(mapData.x, mapData.y));
     kCtx.add([kCtx.sprite(this.#name), kCtx.pos(0, 0)]);
-  }
-
-  #setupCamera() {
-    kCtx.camScale(this.#zoom);
-    kCtx.camPos(this.#player.pos);
+    this._spawnPoints = spawnPoints.map(({ height, name, width, x, y }) =>
+      kCtx.add([
+        kCtx.area({ shape: new kCtx.Rect(kCtx.vec2(), width, height) }),
+        kCtx.body({ isStatic: true }),
+        kCtx.pos(x, y),
+        name,
+      ])
+    );
   }
 
   #setupInput() {
     kCtx.onScroll(({ y }) => this.#onZoom(y));
     kCtx.onMouseDown(() => {
       const mouseWorld = kCtx.toWorld(kCtx.mousePos());
-      const inside = this.#isPointInPolygon(mouseWorld);
 
-      if (inside) {
+      if (isPointInPolygon(mouseWorld, this.#polygon)) {
         this.#player.moveTo(mouseWorld);
       }
     });
@@ -80,29 +69,34 @@ export class Room {
     kCtx.onUpdate(() => {
       const footPos = this.#player.pos.add(kCtx.vec2(0, this.#player.height / 4));
 
-      if (!this.#isPointInPolygon(footPos)) {
-        this.#player.pos = this.#lastValidPos.clone();
-      } else {
+      if (isPointInPolygon(footPos, this.#polygon)) {
         this.#lastValidPos = this.#player.pos.clone();
-      }
+      } else this.#player.pos = this.#lastValidPos.clone();
 
       kCtx.camPos(this.#player.pos);
       this.#player.update();
     });
   }
 
-  async start(baseX, baseY) {
+  async _onSpawnPointCollide() {}
+
+  async init(roomManager) {
+    if (!(roomManager instanceof RoomManager))
+      throw new Error('Room manager must be an instance of RoomManager class.');
+
+    this._roomManager = roomManager;
     kCtx.scene(this.#name, async () => {
       await this.#loadMap();
-
-      this.#player = new Player(baseX, baseY);
-      this.#lastValidPos = this.#player.pos.clone();
-
-      this.#setupCamera();
+      await this._onSpawnPointCollide();
+      this.#player = new Player();
       this.#setupInput();
       this.#setupUpdate();
     });
+  }
 
+  start(baseX, baseY) {
+    this.#spawnPos = kCtx.vec2(baseX, baseY).scale(cellSize);
+    this.#lastValidPos = this.#spawnPos.clone();
     kCtx.go(this.#name);
   }
 }

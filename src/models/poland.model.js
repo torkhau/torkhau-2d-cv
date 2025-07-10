@@ -1,15 +1,15 @@
 import { Room } from './room.model';
 
-export class Belarus extends Room {
+export class Poland extends Room {
   constructor() {
-    super('Belarus', 'belarus.json');
+    super('Poland', 'poland.json');
   }
 
   async _onSpawnPointCollide() {
     for (const spawnPoint of this._spawnPoints) {
       spawnPoint.onCollide('player', async () => {
-        if (spawnPoint.is('toPoland')) {
-          await this._roomManager.startRoom('Poland', 61, 40);
+        if (spawnPoint.is('toBelarus')) {
+          await this._roomManager.startRoom('Belarus', 7, 35);
         }
       });
     }

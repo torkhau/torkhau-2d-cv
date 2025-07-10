@@ -19,16 +19,32 @@ export class Player {
     down: () => this.#player.move(0, this.#speed),
   };
 
-  constructor(baseX = 23, baseY = 53) {
-    this._baseX = baseX;
-    this._baseY = baseY;
+  // constructor(baseX = 23, baseY = 53) {
+  //   this._baseX = baseX;
+  //   this._baseY = baseY;
 
+  //   this.#player = kCtx.make([
+  //     kCtx.sprite('player', { anim: 'idle' }),
+  //     kCtx.pos(this._baseX * cellSize, this._baseY * cellSize),
+  //     kCtx.area(),
+  //     kCtx.body(),
+  //     kCtx.anchor('center'),
+  //     'player',
+  //   ]);
+
+  //   this.#bindControls();
+
+  //   kCtx.add(this.#player);
+  // }
+
+  constructor() {
     this.#player = kCtx.make([
       kCtx.sprite('player', { anim: 'idle' }),
-      kCtx.pos(this._baseX * cellSize, this._baseY * cellSize),
+      kCtx.pos(0, 0),
       kCtx.area(),
       kCtx.body(),
       kCtx.anchor('center'),
+      'player',
     ]);
 
     this.#bindControls();
