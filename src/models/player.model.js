@@ -1,41 +1,21 @@
-import { cellSize, kCtx } from '../core';
+import { kCtx, moveTolerance, playerSpeed } from '../core';
 
 export class Player {
   #player = null;
-  #speed = 100;
   #direction = 'right';
   #moveTarget = null;
-  #moveTolerance = 0.1 * cellSize;
   #movement = {
     left: () => {
       this.#setDirection('left');
-      this.#player.move(-this.#speed, 0);
+      this.#player.move(-playerSpeed, 0);
     },
     right: () => {
       this.#setDirection('right');
-      this.#player.move(this.#speed, 0);
+      this.#player.move(playerSpeed, 0);
     },
-    up: () => this.#player.move(0, -this.#speed),
-    down: () => this.#player.move(0, this.#speed),
+    up: () => this.#player.move(0, -playerSpeed),
+    down: () => this.#player.move(0, playerSpeed),
   };
-
-  // constructor(baseX = 23, baseY = 53) {
-  //   this._baseX = baseX;
-  //   this._baseY = baseY;
-
-  //   this.#player = kCtx.make([
-  //     kCtx.sprite('player', { anim: 'idle' }),
-  //     kCtx.pos(this._baseX * cellSize, this._baseY * cellSize),
-  //     kCtx.area(),
-  //     kCtx.body(),
-  //     kCtx.anchor('center'),
-  //     'player',
-  //   ]);
-
-  //   this.#bindControls();
-
-  //   kCtx.add(this.#player);
-  // }
 
   constructor() {
     this.#player = kCtx.make([
@@ -104,13 +84,13 @@ export class Player {
     const dir = this.#moveTarget.sub(this.#player.pos);
     const dist = dir.len();
 
-    if (dist <= this.#moveTolerance) {
+    if (dist <= moveTolerance) {
       this.#moveTarget = null;
       this.#player.play('idle');
       return;
     }
 
-    const step = dir.unit().scale(this.#speed);
+    const step = dir.unit().scale(playerSpeed);
     this.#player.move(step);
 
     if (Math.abs(dir.x) > Math.abs(dir.y)) {

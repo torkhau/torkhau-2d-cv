@@ -1,4 +1,4 @@
-import { Room } from './room.model';
+import { Room } from './room/room.model';
 
 export class RoomManager {
   #rooms = new Map();
@@ -6,37 +6,40 @@ export class RoomManager {
 
   constructor(rooms) {
     Object.entries(rooms).forEach(([roomName, roomInstance]) => {
-      if (!(roomInstance instanceof Room)) {
-        throw new Error(`Room ${roomName} is not an instance of Room.`);
-      }
+      if (!(roomInstance instanceof Room)) throw new Error(`Room ${roomName} is not an instance of Room.`);
+
       this.#registerRoom(roomName, roomInstance);
     });
   }
 
+  #getRoom(roomName) {
+    return this.#rooms.get(roomName);
+  }
+
+  #isRoomRegistered(roomName) {
+    return this.#rooms.has(roomName);
+  }
+
   #registerRoom(roomName, roomInstance) {
-    if (this.#rooms.has(roomName)) {
-      throw new Error(`Room with name ${roomName} already exists.`);
-    }
+    if (this.#isRoomRegistered(roomName)) throw new Error(`Room with name ${roomName} already exists.`);
+
     this.#rooms.set(roomName, roomInstance);
   }
 
-  #getRoom(name) {
-    return this.#rooms.get(name);
-  }
-
-  #isRoomRegistered(name) {
-    return this.#rooms.has(name);
-  }
-
   async initRooms() {
-    await Promise.all(Array.from(this.#rooms.values()).map((room) => room.init(this)));
+    await Promise.all(
+      Array.from(this.#rooms.values()).map(async (room) => {
+        await room.init();
+        room.on('collide', this.startRoom.bind(this));
+      })
+    );
   }
 
-  startRoom(name, baseX, baseY) {
-    if (this.#currentRoom === name || !this.#isRoomRegistered(name)) return;
+  startRoom({ roomName, spawnPoint: { x, y } }) {
+    if (this.#currentRoom === roomName || !this.#isRoomRegistered(roomName)) return;
 
-    this.#currentRoom = name;
-    const room = this.#getRoom(name);
-    room.start(baseX, baseY);
+    this.#currentRoom = roomName;
+    const room = this.#getRoom(roomName);
+    room.start(x, y);
   }
 }

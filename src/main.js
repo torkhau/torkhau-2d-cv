@@ -1,3 +1,4 @@
+import { spawnPoints } from './core';
 import { Belarus, Poland, RoomManager } from './models';
 
 export const roomManager = new RoomManager({
@@ -6,4 +7,4 @@ export const roomManager = new RoomManager({
 });
 
 await roomManager.initRooms();
-roomManager.startRoom('Belarus', 23, 53);
+roomManager.startRoom(spawnPoints.start);
