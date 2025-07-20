@@ -42,5 +42,4 @@ export class PlayerMover {
 
     if (Math.abs(subtraction.x) > Math.abs(subtraction.y)) this.setDirection(subtraction.x < 0 ? 'left' : 'right');
   }
-
 }

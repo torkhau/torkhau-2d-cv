@@ -21,12 +21,7 @@ export class Room extends EventBus {
     kCtx.onMouseDown(() => {
       const mouseWorld = kCtx.toWorld(kCtx.mousePos());
 
-      const qq = isPointInPolygon(mouseWorld, this.#polygon);
-      console.log('Mouse world position:', mouseWorld, 'In polygon:', this.#polygon);
-
-      if (isPointInPolygon(mouseWorld, this.#polygon)) {
-        this.#playerMover.moveTo(mouseWorld);
-      }
+      if (isPointInPolygon(mouseWorld, this.#polygon)) this.#playerMover.moveTo(mouseWorld);
     });
     kCtx.onMouseRelease(() => {
       this.#playerMover.stop();
@@ -48,11 +43,10 @@ export class Room extends EventBus {
 
   _handlePlayerCollisions(tag) {
     for (const point of this.#spawnPointGameObjects) {
-      if (point.is(tag)) {
+      if (point.is(tag))
         point.onCollide('player', () => {
           this.emit('collide', spawnPoints[tag]);
         });
-      }
     }
   }
 

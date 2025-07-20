@@ -36,7 +36,6 @@ export class Player {
     return this.#player.height;
   }
 
-
   use(value) {
     this.#player.use(value);
   }
