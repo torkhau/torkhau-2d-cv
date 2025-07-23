@@ -1,8 +1,11 @@
+import { start } from '../core';
+import { Dialog } from './dialog.model';
 import { Room } from './room/room.model';
 
 export class RoomManager {
   #rooms = new Map();
   #currentRoom = null;
+  #dialog;
 
   constructor(rooms) {
     Object.entries(rooms).forEach(([roomName, roomInstance]) => {
@@ -10,6 +13,7 @@ export class RoomManager {
 
       this.#registerRoom(roomName, roomInstance);
     });
+    this.#dialog = new Dialog(start);
   }
 
   #getRoom(roomName) {
@@ -37,6 +41,8 @@ export class RoomManager {
 
   startRoom({ roomName, spawnPoint: { x, y } }) {
     if (this.#currentRoom === roomName || !this.#isRoomRegistered(roomName)) return;
+
+    if (this.#currentRoom === null) this.#dialog.show();
 
     this.#currentRoom = roomName;
     const room = this.#getRoom(roomName);

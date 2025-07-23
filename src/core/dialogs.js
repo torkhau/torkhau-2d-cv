@@ -1,0 +1,1 @@
+export const start = ['Siemano kolano Alesia!', 'This is a simple dialog system.'];

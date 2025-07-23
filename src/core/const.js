@@ -16,3 +16,5 @@ export const spawnPoints = {
 };
 
 export const playerSpeed = 100;
+
+export const speedPlayTrext = 80;
