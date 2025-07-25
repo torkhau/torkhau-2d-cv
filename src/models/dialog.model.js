@@ -41,23 +41,39 @@ export class Dialog {
     this.#currentTextIndex = 0;
   }
 
-  #updateText() {
+  async #updateText() {
     this.#disableButtons(true);
-    const dialogText = this.#text[this.#currentTextIndex];
-    let textIndex = 0;
+    const rawText = this.#text[this.#currentTextIndex];
     let textContent = '';
 
-    const interval = setInterval(() => {
-      if (textIndex < dialogText.length) {
-        textContent += dialogText[textIndex];
+    for (const item of rawText) {
+      if (typeof item === 'object' && item.tag) {
+        textContent += item.tag;
         this.#dialogText.innerHTML = textContent;
-        textIndex += 1;
-        return;
+      } else if (typeof item === 'string') {
+        textContent = await this.#printText(item, textContent);
       }
+    }
 
-      this.#disableButtons(false);
-      clearInterval(interval);
-    }, speedPlayText);
+    this.#disableButtons(false);
+  }
+
+  #printText(text, existingText) {
+    return new Promise((resolve) => {
+      let index = 0;
+      let result = existingText;
+
+      const interval = setInterval(() => {
+        if (index < text.length) {
+          result += text[index];
+          this.#dialogText.innerHTML = result;
+          index++;
+        } else {
+          clearInterval(interval);
+          resolve(result);
+        }
+      }, speedPlayText);
+    });
   }
 
   #updateButtons() {

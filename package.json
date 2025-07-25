@@ -14,7 +14,7 @@
     "eslint": "^9.31.0",
     "globals": "^16.3.0",
     "terser": "^5.43.1",
-    "vite": "^7.0.5"
+    "vite": "^7.0.6"
   },
   "dependencies": {
     "kaboom": "^3000.1.17"
