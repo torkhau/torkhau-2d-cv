@@ -9,4 +9,5 @@ export const kCtx = kaboom({
 
 kCtx.setBackground(...background, 0.3);
 await kCtx.loadSprite('belarus', `${levelFolder}/belarus.png`);
+await kCtx.loadSprite('belarusHome', `${levelFolder}/belarusHome.png`);
 await kCtx.loadSprite('poland', `${levelFolder}/poland.png`);

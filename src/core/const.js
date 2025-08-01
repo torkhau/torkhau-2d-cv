@@ -12,6 +12,8 @@ export const levelFolder = '/levels';
 export const spawnPoints = {
   start: { roomName: 'Belarus', spawnPoint: { x: 23, y: 53 } },
   toBelarus: { roomName: 'Belarus', spawnPoint: { x: 7, y: 35 } },
+  toBelarusFromHome: { roomName: 'Belarus', spawnPoint: { x: 28, y: 54 } },
+  toBelarusHome: { roomName: 'BelarusHome', spawnPoint: { x: 6, y: 11 } },
   toPoland: { roomName: 'Poland', spawnPoint: { x: 61, y: 40 } },
 };
 

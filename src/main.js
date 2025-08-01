@@ -1,9 +1,11 @@
 import { spawnPoints } from './core';
-import { Belarus, Poland, RoomManager } from './models';
+import { RoomManager } from './models';
+import { Room } from './models/room';
 
 export const roomManager = new RoomManager({
-  Belarus: new Belarus(),
-  Poland: new Poland(),
+  Belarus: new Room('belarus'),
+  BelarusHome: new Room('belarusHome'),
+  Poland: new Room('poland'),
 });
 
 await roomManager.initRooms();

@@ -41,16 +41,13 @@ export class Room extends EventBus {
     });
   }
 
-  _handlePlayerCollisions(tag) {
-    for (const point of this.#spawnPointGameObjects) {
-      if (point.is(tag))
-        point.onCollide('player', () => {
-          this.emit('collide', spawnPoints[tag]);
-        });
+  #onSpawnPointCollide() {
+    for (const { name, spawnObj } of this.#spawnPointGameObjects) {
+      spawnObj.onCollide('player', () => {
+        this.emit('collide', spawnPoints[name]);
+      });
     }
   }
-
-  _onSpawnPointCollide() {}
 
   async init() {
     const { polygon, spawnPointsData } = await MapLoader.load(this.#name);
@@ -58,16 +55,17 @@ export class Room extends EventBus {
     this.#spawnPointsData.push(...spawnPointsData);
     kCtx.scene(this.#name, () => {
       kCtx.add([kCtx.sprite(this.#name), kCtx.pos(0, 0)]);
-      this.#spawnPointGameObjects = this.#spawnPointsData.map(({ height, name, width, x, y }) =>
-        kCtx.add([
+      this.#spawnPointGameObjects = this.#spawnPointsData.map(({ height, name, width, x, y }) => ({
+        spawnObj: kCtx.add([
           kCtx.area({ shape: new kCtx.Rect(kCtx.vec2(), width, height) }),
           kCtx.body({ isStatic: true }),
           kCtx.pos(x, y),
-          name,
-        ])
-      );
+          // name,
+        ]),
+        name,
+      }));
 
-      this._onSpawnPointCollide();
+      this.#onSpawnPointCollide();
 
       this.#player = new Player();
       this.#playerMover = new PlayerMover(this.#player);
