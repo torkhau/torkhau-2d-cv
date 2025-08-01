@@ -3,8 +3,8 @@ export const background = [0, 153, 219];
 export const cellSize = 16;
 export const moveTolerance = 0.1 * cellSize;
 
-export const zoomFactor = 1.1;
-export const minZoom = 0.9;
+export const zoomFactor = 1.5;
+export const minZoom = 1;
 export const maxZoom = 2;
 
 export const levelFolder = '/levels';

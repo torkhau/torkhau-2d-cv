@@ -1,6 +1,6 @@
 import { MapLoader, ZoomController } from '.';
 import { cellSize, EventBus, kCtx, spawnPoints } from '../../core';
-import { isPointInPolygon } from '../../utils';
+import { isPointInPolygon, isPointNotInBarrier } from '../../utils';
 import { Player, PlayerController, PlayerMover } from '../player';
 
 export class Room extends EventBus {
@@ -9,6 +9,7 @@ export class Room extends EventBus {
   #lastValidPos;
   #name = '';
   #polygon = [];
+  #barriers = [];
   #spawnPointsData = [];
   #spawnPointGameObjects = [];
 
@@ -32,7 +33,7 @@ export class Room extends EventBus {
     kCtx.onUpdate(() => {
       const footPos = this.#player.position.add(kCtx.vec2(0, this.#player.height / 4));
 
-      if (isPointInPolygon(footPos, this.#polygon)) {
+      if (isPointInPolygon(footPos, this.#polygon) && isPointNotInBarrier(footPos, this.#barriers)) {
         this.#lastValidPos = this.#player.position.clone();
       } else this.#player.position = this.#lastValidPos.clone();
 
@@ -50,8 +51,9 @@ export class Room extends EventBus {
   }
 
   async init() {
-    const { polygon, spawnPointsData } = await MapLoader.load(this.#name);
+    const { polygon, barriers, spawnPointsData } = await MapLoader.load(this.#name);
     this.#polygon.push(...polygon);
+    this.#barriers.push(...barriers);
     this.#spawnPointsData.push(...spawnPointsData);
     kCtx.scene(this.#name, () => {
       kCtx.add([kCtx.sprite(this.#name), kCtx.pos(0, 0)]);
@@ -60,7 +62,6 @@ export class Room extends EventBus {
           kCtx.area({ shape: new kCtx.Rect(kCtx.vec2(), width, height) }),
           kCtx.body({ isStatic: true }),
           kCtx.pos(x, y),
-          // name,
         ]),
         name,
       }));

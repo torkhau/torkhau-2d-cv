@@ -15,3 +15,9 @@ export function isPointInPolygon(point, polygon) {
 
   return inside;
 }
+
+export function isPointNotInBarrier(point, barriers) {
+  for (const barrier of barriers) if (isPointInPolygon(point, barrier)) return false;
+
+  return true;
+}
