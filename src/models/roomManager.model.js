@@ -1,4 +1,5 @@
-import { start } from '../core';
+import { dialodues } from '../core';
+import { uncapitalize } from '../utils';
 import { Dialog } from './dialog.model';
 import { Room } from './room/room.model';
 
@@ -6,6 +7,7 @@ export class RoomManager {
   #rooms = new Map();
   #currentRoom = null;
   #dialog;
+  #visitedRooms = {};
 
   constructor(rooms) {
     Object.entries(rooms).forEach(([roomName, roomInstance]) => {
@@ -13,7 +15,7 @@ export class RoomManager {
 
       this.#registerRoom(roomName, roomInstance);
     });
-    this.#dialog = new Dialog(start);
+    this.#dialog = new Dialog(dialodues.start);
   }
 
   #getRoom(roomName) {
@@ -43,6 +45,15 @@ export class RoomManager {
     if (this.#currentRoom === roomName || !this.#isRoomRegistered(roomName)) return;
 
     if (this.#currentRoom === null) this.#dialog.show();
+
+    const dialogueRoomName = uncapitalize(roomName);
+    const dialogue = dialodues[dialogueRoomName];
+
+    if (dialogue && !this.#visitedRooms[dialogueRoomName]) {
+      this.#dialog.text = dialogue;
+      this.#visitedRooms[dialogueRoomName] = true;
+      this.#dialog.show();
+    }
 
     this.#currentRoom = roomName;
     const room = this.#getRoom(roomName);
