@@ -13,10 +13,12 @@ export const spawnPoints = {
   start: { roomName: 'Belarus', spawnPoint: { x: 23, y: 53 } },
   toBelarus: { roomName: 'Belarus', spawnPoint: { x: 7, y: 35 } },
   toBelarusFromHome: { roomName: 'Belarus', spawnPoint: { x: 28, y: 54 } },
+  toBelarusFromWork: { roomName: 'Belarus', spawnPoint: { x: 40, y: 22 } },
   toBelarusHome: { roomName: 'BelarusHome', spawnPoint: { x: 6, y: 11 } },
+  toBelarusWork: { roomName: 'BelarusWork', spawnPoint: { x: 8, y: 11 } },
   toPoland: { roomName: 'Poland', spawnPoint: { x: 61, y: 40 } },
 };
 
 export const playerSpeed = 100;
 
-export const speedPlayTrext = 80;
+export const speedPlayTrext = 25;
