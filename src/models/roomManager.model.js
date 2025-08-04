@@ -32,6 +32,17 @@ export class RoomManager {
     this.#rooms.set(roomName, roomInstance);
   }
 
+  #initDialogue(roomName) {
+    const dialogueRoomName = uncapitalize(roomName);
+    const dialogue = dialodues[dialogueRoomName];
+
+    if (dialogue && !this.#visitedRooms[dialogueRoomName]) {
+      this.#dialog.text = dialogue;
+      this.#visitedRooms[dialogueRoomName] = true;
+      this.#dialog.show();
+    }
+  }
+
   async initRooms() {
     await Promise.all(
       Array.from(this.#rooms.values()).map(async (room) => {
@@ -46,15 +57,7 @@ export class RoomManager {
 
     if (this.#currentRoom === null) this.#dialog.show();
 
-    const dialogueRoomName = uncapitalize(roomName);
-    const dialogue = dialodues[dialogueRoomName];
-
-    if (dialogue && !this.#visitedRooms[dialogueRoomName]) {
-      this.#dialog.text = dialogue;
-      this.#visitedRooms[dialogueRoomName] = true;
-      this.#dialog.show();
-    }
-
+    this.#initDialogue(roomName);
     this.#currentRoom = roomName;
     const room = this.#getRoom(roomName);
     room.start(x, y);
