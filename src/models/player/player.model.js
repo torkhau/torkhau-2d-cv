@@ -10,7 +10,7 @@ export class Player {
       kCtx.body(),
       kCtx.pos(0, 0),
       kCtx.anchor('center'),
-      kCtx.z(1),
+      kCtx.z(2),
       'player',
     ]);
   }

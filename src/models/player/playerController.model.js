@@ -12,6 +12,19 @@ export class PlayerController {
     this.#mover = mover;
     this.#bindControls();
   }
+  
+  paused(value) {
+    this.#keyDownController.paused = value;
+    this.#mouseDownController.paused = value;
+
+    if (value) {
+      this.#mover.stop();
+      this.#canMoveWithMouse = false;
+      return;
+    }
+
+    if (!kCtx.isMouseDown()) this.#canMoveWithMouse = true;
+  }
 
   #bindControls() {
     kCtx.onKeyRelease(() => {
@@ -48,18 +61,5 @@ export class PlayerController {
       this.#mover.stop();
       this.#canMoveWithMouse = true;
     });
-  }
-
-  paused(value) {
-    this.#keyDownController.paused = value;
-    this.#mouseDownController.paused = value;
-
-    if (value) {
-      this.#mover.stop();
-      this.#canMoveWithMouse = false;
-      return;
-    }
-
-    if (!kCtx.isMouseDown()) this.#canMoveWithMouse = true;
   }
 }

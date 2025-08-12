@@ -164,7 +164,7 @@
   ],
   "barriers": [
     {
-      "height": 2,
+      "height": 15,
       "type": "rect",
       "name": "toBelarusFromWork",
       "width": 16,

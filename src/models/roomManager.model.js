@@ -22,35 +22,6 @@ export class RoomManager {
     this.#dialog = new Dialog(playerController);
   }
 
-  #getRoom(roomName) {
-    return this.#rooms.get(roomName);
-  }
-
-  #isRoomRegistered(roomName) {
-    return this.#rooms.has(roomName);
-  }
-
-  #registerRoom(roomName, roomInstance) {
-    if (this.#isRoomRegistered(roomName)) throw new Error(`Room with name ${roomName} already exists.`);
-
-    this.#rooms.set(roomName, roomInstance);
-  }
-
-  #startRoomDialogue(roomName) {
-    if (this.#visitedRooms[roomName]) return;
-
-    const dialogue = roomDialodues[roomName];
-
-    if (dialogue) {
-      this.#visitedRooms[roomName] = true;
-      this.#dialog.show(dialogue);
-    }
-  }
-
-  #startInteractivePointDialogue(interactivePointName) {
-    this.#dialog.show(interactiveDialodues[interactivePointName]);
-  }
-
   async initRooms() {
     await Promise.all(
       [...this.#rooms.values()].map(async (room) => {
@@ -79,5 +50,34 @@ export class RoomManager {
     this.#startRoomDialogue(this.#currentRoom);
     this.#getRoom(this.#currentRoom).display();
     this.#player.position = kCtx.vec2(x, y).scale(cellSize);
+  }
+
+  #getRoom(roomName) {
+    return this.#rooms.get(roomName);
+  }
+
+  #isRoomRegistered(roomName) {
+    return this.#rooms.has(roomName);
+  }
+
+  #registerRoom(roomName, roomInstance) {
+    if (this.#isRoomRegistered(roomName)) throw new Error(`Room with name ${roomName} already exists.`);
+
+    this.#rooms.set(roomName, roomInstance);
+  }
+
+  #startRoomDialogue(roomName) {
+    if (this.#visitedRooms[roomName]) return;
+
+    const dialogue = roomDialodues[roomName];
+
+    if (dialogue) {
+      this.#visitedRooms[roomName] = true;
+      this.#dialog.show(dialogue);
+    }
+  }
+
+  #startInteractivePointDialogue(interactivePointName) {
+    this.#dialog.show(interactiveDialodues[interactivePointName]);
   }
 }

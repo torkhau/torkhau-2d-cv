@@ -227,6 +227,14 @@
       "y": 91
     },
     {
+      "height": 22,
+      "type": "rect",
+      "name": "homeWorkPlace",
+      "width": 20,
+      "x": 110,
+      "y": 63
+    },
+    {
       "height": 1,
       "type": "rect",
       "name": "toBelarusFromHome",
