@@ -1,4 +1,4 @@
-const start = [
+const belarus = [
   ['👋 Hi there!', { tag: '<br />' }, 'Welcome to my interactive CV.'],
   ['Instead of reading a boring PDF, you get to play!'],
   [
@@ -8,7 +8,7 @@ const start = [
     { tag: '<br />' },
     '- Or click on paths with your mouse.',
   ],
-  ['🔍 Zoom in/out:', { tag: '<br />' }, '+ / – keys or scroll the mouse wheel.'],
+  ['🔍 Zoom in/out:', { tag: '<br />' }, '+ / - keys or scroll the mouse wheel.'],
   ["Let's get started!"],
 ];
 
@@ -29,4 +29,4 @@ const belarusWork = [
   ['I built strong foundations in systems thinking, long before moving into full-stack web development.'],
 ];
 
-export const dialodues = { start, belarusHome, belarusWork };
+export const roomDialodues = { belarus, belarusHome, belarusWork };

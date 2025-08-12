@@ -34,5 +34,14 @@ export class PlayerController {
         this.#player.currentAnimation = 'walk';
       }
     });
+
+    kCtx.onMouseDown(() => {
+      const mouseWorld = kCtx.toWorld(kCtx.mousePos());
+      this.#mover.moveTo(mouseWorld)
+    });
+
+    kCtx.onMouseRelease(() => {
+      this.#mover.stop();
+    });
   }
 }

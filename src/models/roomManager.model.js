@@ -1,5 +1,4 @@
-import { dialodues } from '../core';
-import { uncapitalize } from '../utils';
+import { cellSize, interactiveDialodues, kCtx, roomDialodues, spawnPoints } from '../core';
 import { Dialog } from './dialog.model';
 import { Room } from './room/room.model';
 
@@ -8,14 +7,19 @@ export class RoomManager {
   #currentRoom = null;
   #dialog;
   #visitedRooms = {};
+  #player;
 
-  constructor(rooms) {
-    Object.entries(rooms).forEach(([roomName, roomInstance]) => {
-      if (!(roomInstance instanceof Room)) throw new Error(`Room ${roomName} is not an instance of Room.`);
+  constructor(player, rooms) {
+    if (!Array.isArray(rooms)) throw new Error('Rooms should be an array of room names.');
 
-      this.#registerRoom(roomName, roomInstance);
+    rooms.forEach((roomName) => {
+      if (typeof roomName !== 'string') throw new Error('Room name should be a string.');
+
+      this.#registerRoom(roomName, new Room(roomName));
     });
-    this.#dialog = new Dialog(dialodues.start);
+
+    this.#player = player;
+    this.#dialog = new Dialog();
   }
 
   #getRoom(roomName) {
@@ -32,34 +36,48 @@ export class RoomManager {
     this.#rooms.set(roomName, roomInstance);
   }
 
-  #initDialogue(roomName) {
-    const dialogueRoomName = uncapitalize(roomName);
-    const dialogue = dialodues[dialogueRoomName];
+  #startRoomDialogue(roomName) {
+    if (this.#visitedRooms[roomName]) return;
 
-    if (dialogue && !this.#visitedRooms[dialogueRoomName]) {
-      this.#dialog.text = dialogue;
-      this.#visitedRooms[dialogueRoomName] = true;
-      this.#dialog.show();
+    const dialogue = roomDialodues[roomName];
+
+    if (dialogue) {
+      this.#visitedRooms[roomName] = true;
+      this.#dialog.show(dialogue);
     }
+  }
+
+  #startInteractivePointDialogue(interactivePointName) {
+    this.#dialog.show(interactiveDialodues[interactivePointName]);
   }
 
   async initRooms() {
     await Promise.all(
-      Array.from(this.#rooms.values()).map(async (room) => {
-        await room.init();
-        room.on('collide', this.startRoom.bind(this));
+      [...this.#rooms.values()].map(async (room) => {
+        await room.load();
+        room.on('spawnCollide', this.goTo.bind(this));
+        room.on('barrierCollide', this.#startInteractivePointDialogue.bind(this));
       })
     );
   }
 
-  startRoom({ roomName, spawnPoint: { x, y } }) {
+  goTo(spawnPointName) {
+    const spawn = spawnPoints[spawnPointName];
+
+    if (!spawn) return;
+
+    const {
+      roomName,
+      spawnPoint: { x, y },
+    } = spawn;
+
     if (this.#currentRoom === roomName || !this.#isRoomRegistered(roomName)) return;
 
-    if (this.#currentRoom === null) this.#dialog.show();
+    if (this.#currentRoom) this.#getRoom(this.#currentRoom).hide();
 
-    this.#initDialogue(roomName);
     this.#currentRoom = roomName;
-    const room = this.#getRoom(roomName);
-    room.start(x, y);
+    this.#startRoomDialogue(this.#currentRoom);
+    this.#getRoom(this.#currentRoom).display();
+    this.#player.position = kCtx.vec2(x, y).scale(cellSize);
   }
 }

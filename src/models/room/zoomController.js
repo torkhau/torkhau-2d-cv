@@ -1,4 +1,8 @@
-import { kCtx, maxZoom, minZoom, zoomFactor } from '../../core';
+import { kCtx } from '../../core';
+
+const zoomFactor = 1.5;
+const minZoom = 1;
+const maxZoom = 2;
 
 export class ZoomController {
   #zoom = 1;

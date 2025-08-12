@@ -1,4 +1,4 @@
-import { speedPlayTrext as speedPlayText } from '../core';
+const speedPlayText = 25;
 
 export class Dialog {
   #dialogOverlay;
@@ -7,24 +7,29 @@ export class Dialog {
   #dialogButton1;
   #dialogButton2;
 
-  #text;
-  #currentTextIndex;
+  #text = [];
+  #currentTextIndex = 0;
 
-  constructor(text = [], currentTextIndex = 0) {
+  constructor() {
     this.#dialogOverlay = document.getElementById('dialog-overlay');
     this.#dialogBox = document.getElementById('dialog-box');
     this.#dialogText = document.getElementById('dialog-text');
     this.#dialogButton1 = document.getElementById('dialog-button-1');
     this.#dialogButton2 = document.getElementById('dialog-button-2');
 
-    this.#text = text;
-    this.#currentTextIndex = currentTextIndex;
-
     this.#initButtonsHandlers();
     this.hide();
   }
 
-  show() {
+  show(dialogueText = []) {
+    if (dialogueText.length === 0 && this.#text.length === 0) return;
+
+    this.#dialogBox.setAttribute('tabindex', '0');
+    this.#dialogBox.focus();
+
+    if (dialogueText.lengt > 0) this.#text = dialogueText;
+
+    this.#currentTextIndex = 0;
     this.#dialogOverlay.style.display = 'flex';
     this.#dialogBox.style.display = 'block';
     this.#updateText();
@@ -34,11 +39,6 @@ export class Dialog {
   hide() {
     this.#dialogOverlay.style.display = 'none';
     this.#dialogText.textContent = '';
-  }
-
-  set text(newText) {
-    this.#text = newText;
-    this.#currentTextIndex = 0;
   }
 
   async #updateText() {
@@ -87,6 +87,7 @@ export class Dialog {
 
       if (newIndex >= this.#text.length) {
         this.hide();
+        this.#text.length = 0;
         return;
       }
 

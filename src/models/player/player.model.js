@@ -4,16 +4,15 @@ export class Player {
   #player;
 
   constructor() {
-    this.#player = kCtx.make([
+    this.#player = kCtx.add([
       kCtx.sprite('player', { anim: 'idle' }),
-      kCtx.pos(0, 0),
-      kCtx.area(),
+      kCtx.area({ shape: new kCtx.Rect(kCtx.vec2(0, 6), 9, 1) }),
       kCtx.body(),
+      kCtx.pos(0, 0),
       kCtx.anchor('center'),
+      kCtx.z(1),
       'player',
     ]);
-
-    kCtx.add(this.#player);
   }
 
   get currentAnimation() {
@@ -43,17 +42,4 @@ export class Player {
   move(...args) {
     this.#player.move(...args);
   }
-
-  static async preload() {
-    await kCtx.loadSprite('player', '/player/player.png', {
-      sliceX: 9,
-      sliceY: 2,
-      anims: {
-        walk: { from: 0, to: 7, loop: true, speed: 10 },
-        idle: { from: 9, to: 17, loop: true, speed: 8 },
-      },
-    });
-  }
 }
-
-await Player.preload();
