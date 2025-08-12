@@ -1,31 +1,183 @@
-[
-  {
-    "polygon": [
-      {
-        "x": 0,
-        "y": 0
-      },
-      {
-        "x": 0,
-        "y": -136
-      },
-      {
-        "x": 80,
-        "y": -136
-      },
-      {
-        "x": 80,
-        "y": 0
-      }
-    ],
-    "x": 96,
-    "y": 208
-  },
-  {
-    "height": 0,
-    "name": "toBelarusFromWork",
-    "width": 16,
-    "x": 128,
-    "y": 215
-  }
-]
+{
+  "walls": [
+    {
+      "height": 7,
+      "type": "rect",
+      "width": 144,
+      "x": 64,
+      "y": 57
+    },
+    {
+      "height": 25,
+      "type": "rect",
+      "width": 16,
+      "x": 62,
+      "y": 63
+    },
+    {
+      "height": 91,
+      "type": "rect",
+      "width": 3,
+      "x": 60,
+      "y": 87
+    },
+    {
+      "height": 23,
+      "type": "rect",
+      "width": 17,
+      "x": 61,
+      "y": 176
+    },
+    {
+      "height": 8,
+      "type": "rect",
+      "width": 16,
+      "x": 112,
+      "y": 63
+    },
+    {
+      "height": 8,
+      "type": "rect",
+      "width": 16,
+      "x": 144,
+      "y": 63
+    },
+    {
+      "height": 25,
+      "type": "rect",
+      "width": 16,
+      "x": 194,
+      "y": 63
+    },
+    {
+      "height": 24,
+      "type": "rect",
+      "width": 15,
+      "x": 195,
+      "y": 176
+    },
+    {
+      "height": 92,
+      "type": "rect",
+      "width": 3,
+      "x": 209,
+      "y": 86
+    },
+    {
+      "height": 12,
+      "type": "rect",
+      "width": 3,
+      "x": 209,
+      "y": 199
+    },
+    {
+      "height": 13,
+      "type": "rect",
+      "width": 3,
+      "x": 60,
+      "y": 198
+    },
+    {
+      "height": 3,
+      "type": "rect",
+      "width": 149,
+      "x": 62,
+      "y": 209
+    },
+    {
+      "height": 7,
+      "type": "rect",
+      "width": 10,
+      "x": 83,
+      "y": 72
+    },
+    {
+      "height": 7,
+      "type": "rect",
+      "width": 10,
+      "x": 83,
+      "y": 120
+    },
+    {
+      "height": 6,
+      "type": "rect",
+      "width": 10,
+      "x": 83,
+      "y": 169
+    },
+    {
+      "height": 7,
+      "type": "rect",
+      "width": 10,
+      "x": 179,
+      "y": 168
+    },
+    {
+      "height": 6,
+      "type": "rect",
+      "width": 10,
+      "x": 179,
+      "y": 73
+    },
+    {
+      "height": 19,
+      "type": "rect",
+      "width": 21,
+      "x": 77,
+      "y": 79
+    },
+    {
+      "height": 19,
+      "type": "rect",
+      "width": 19,
+      "x": 175,
+      "y": 79
+    },
+    {
+      "height": 20,
+      "type": "rect",
+      "width": 20,
+      "x": 78,
+      "y": 126
+    },
+    {
+      "height": 20,
+      "type": "rect",
+      "width": 21,
+      "x": 175,
+      "y": 174
+    },
+    {
+      "height": 20,
+      "type": "rect",
+      "width": 20,
+      "x": 77,
+      "y": 174
+    },
+    {
+      "height": 8,
+      "type": "rect",
+      "width": 10,
+      "x": 179,
+      "y": 120
+    }
+  ],
+  "barriers": [
+    {
+      "height": 2,
+      "type": "rect",
+      "name": "toBelarusFromWork",
+      "width": 16,
+      "x": 128,
+      "y": 209
+    },
+    {
+      "height": 19,
+      "name": "workPlace",
+      "type": "rect",
+      "width": 18,
+      "x": 175,
+      "y": 127
+    }
+  ]
+}

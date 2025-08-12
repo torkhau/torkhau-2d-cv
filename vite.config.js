@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: './',
+  base: '/torkhau-2d-cv/',
   build: { minify: 'terser' },
 });

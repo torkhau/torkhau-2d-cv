@@ -1,13 +1,6 @@
-import { spawnPoints } from './core';
-import { RoomManager } from './models';
-import { Room } from './models/room';
+import { GameManager } from './models';
 
-export const roomManager = new RoomManager({
-  Belarus: new Room('belarus'),
-  BelarusHome: new Room('belarusHome'),
-  BelarusWork: new Room('belarusWork'),
-  Poland: new Room('poland'),
-});
-
-await roomManager.initRooms();
-roomManager.startRoom(spawnPoints.start);
+(async () => {
+  const game = new GameManager();
+  await game.start();
+})();
