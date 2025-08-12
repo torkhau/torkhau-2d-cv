@@ -73,11 +73,11 @@ export class RoomManager {
 
     if (dialogue) {
       this.#visitedRooms[roomName] = true;
-      this.#dialog.show(dialogue);
+      this.#dialog.show([...dialogue]);
     }
   }
 
   #startInteractivePointDialogue(interactivePointName) {
-    this.#dialog.show(interactiveDialodues[interactivePointName]);
+    this.#dialog.show([...interactiveDialodues[interactivePointName]]);
   }
 }
