@@ -10,24 +10,27 @@ export class Dialog {
   #text = [];
   #currentTextIndex = 0;
 
-  constructor() {
+  #playerController;
+
+  constructor(playerController) {
     this.#dialogOverlay = document.getElementById('dialog-overlay');
     this.#dialogBox = document.getElementById('dialog-box');
     this.#dialogText = document.getElementById('dialog-text');
     this.#dialogButton1 = document.getElementById('dialog-button-1');
     this.#dialogButton2 = document.getElementById('dialog-button-2');
+    this.#playerController = playerController;
 
     this.#initButtonsHandlers();
-    this.hide();
   }
 
   show(dialogueText = []) {
     if (dialogueText.length === 0 && this.#text.length === 0) return;
 
+    this.#playerController.paused(true);
     this.#dialogBox.setAttribute('tabindex', '0');
     this.#dialogBox.focus();
 
-    if (dialogueText.lengt > 0) this.#text = dialogueText;
+    if (dialogueText.length > 0) this.#text = dialogueText;
 
     this.#currentTextIndex = 0;
     this.#dialogOverlay.style.display = 'flex';
@@ -39,6 +42,8 @@ export class Dialog {
   hide() {
     this.#dialogOverlay.style.display = 'none';
     this.#dialogText.textContent = '';
+    this.#playerController.paused(false);
+    document.getElementById('game').focus();
   }
 
   async #updateText() {

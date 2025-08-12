@@ -9,12 +9,14 @@ export class GameManager {
   #roomManager;
 
   constructor() {
-
     this.#player = new Player();
     this.#playerMover = new PlayerMover(this.#player);
-    new PlayerController(this.#player, this.#playerMover);
-
-    this.#roomManager = new RoomManager(this.#player, ['belarus', 'belarusHome', 'belarusWork', 'poland']);
+    this.#roomManager = new RoomManager(this.#player, new PlayerController(this.#player, this.#playerMover), [
+      'belarus',
+      'belarusHome',
+      'belarusWork',
+      'poland',
+    ]);
 
     new ZoomController();
   }

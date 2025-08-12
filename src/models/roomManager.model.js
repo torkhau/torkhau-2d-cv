@@ -9,7 +9,7 @@ export class RoomManager {
   #visitedRooms = {};
   #player;
 
-  constructor(player, rooms) {
+  constructor(player, playerController, rooms) {
     if (!Array.isArray(rooms)) throw new Error('Rooms should be an array of room names.');
 
     rooms.forEach((roomName) => {
@@ -19,7 +19,7 @@ export class RoomManager {
     });
 
     this.#player = player;
-    this.#dialog = new Dialog();
+    this.#dialog = new Dialog(playerController);
   }
 
   #getRoom(roomName) {
