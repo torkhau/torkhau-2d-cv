@@ -13,40 +13,36 @@ export class PlayerController {
     this.#bindControls();
   }
 
-  #mouseDownHandler() {
-    if (!this.#canMoveWithMouse) return;
-
-    const mouseWorld = kCtx.toWorld(kCtx.mousePos());
-    this.#mover.moveTo(mouseWorld);
-  }
-
-  #keyDownHandler(key) {
-    const movement = {
-      left: () => {
-        this.#mover.setDirection('left');
-        this.#player.move(-playerSpeed, 0);
-      },
-      right: () => {
-        this.#mover.setDirection('right');
-        this.#player.move(playerSpeed, 0);
-      },
-      up: () => this.#player.move(0, -playerSpeed),
-      down: () => this.#player.move(0, playerSpeed),
-    }[key];
-
-    if (movement) {
-      movement();
-      this.#player.currentAnimation = 'walk';
-    }
-  }
-
   #bindControls() {
     kCtx.onKeyRelease(() => {
       this.#player.currentAnimation = 'idle';
     });
 
-    this.#keyDownController = kCtx.onKeyDown(this.#keyDownHandler.bind(this));
-    this.#mouseDownController = kCtx.onMouseDown(this.#mouseDownHandler.bind(this));
+    this.#keyDownController = kCtx.onKeyDown((key) => {
+      const movement = {
+        left: () => {
+          this.#mover.setDirection('left');
+          this.#player.move(-playerSpeed, 0);
+        },
+        right: () => {
+          this.#mover.setDirection('right');
+          this.#player.move(playerSpeed, 0);
+        },
+        up: () => this.#player.move(0, -playerSpeed),
+        down: () => this.#player.move(0, playerSpeed),
+      }[key];
+
+      if (movement) {
+        movement();
+        this.#player.currentAnimation = 'walk';
+      }
+    });
+    this.#mouseDownController = kCtx.onMouseDown(() => {
+      if (!this.#canMoveWithMouse) return;
+
+      const mouseWorld = kCtx.toWorld(kCtx.mousePos());
+      this.#mover.moveTo(mouseWorld);
+    });
 
     kCtx.onMouseRelease(() => {
       this.#mover.stop();
@@ -55,16 +51,14 @@ export class PlayerController {
   }
 
   paused(value) {
+    this.#keyDownController.paused = value;
+    this.#mouseDownController.paused = value;
+
     if (value) {
       this.#mover.stop();
-      this.#keyDownController.cancel();
-      this.#mouseDownController.cancel();
       this.#canMoveWithMouse = false;
       return;
     }
-
-    this.#keyDownController = kCtx.onKeyDown(this.#keyDownHandler.bind(this));
-    this.#mouseDownController = kCtx.onMouseDown(this.#mouseDownHandler.bind(this));
 
     if (!kCtx.isMouseDown()) this.#canMoveWithMouse = true;
   }
