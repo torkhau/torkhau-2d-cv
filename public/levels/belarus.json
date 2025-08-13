@@ -285,7 +285,7 @@
     {
       "height": 3,
       "type": "rect",
-      "width": 99,
+      "width": 100,
       "x": 366,
       "y": 880
     },
@@ -297,9 +297,9 @@
       "y": 828
     },
     {
-      "height": 50,
+      "height": 51,
       "type": "rect",
-      "width": 3,
+      "width": 4,
       "x": 464,
       "y": 829
     },
