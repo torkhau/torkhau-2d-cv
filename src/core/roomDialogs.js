@@ -25,8 +25,17 @@ const belarusWork = [
   ['🏢 Welcome to Polesieinformatika.'],
   ['I worked here from 2007 to 2012 as a Senior Software Developer and Engineer.'],
   ['My role focused on enhancing and customizing 1C:Enterprise configurations for business clients.'],
-  ["It's where I learned how software can drive process efficiency and real business value."],
-  ['I built strong foundations in systems thinking, long before moving into full-stack web development.'],
 ];
 
-export const roomDialodues = { belarus, belarusHome, belarusWork };
+const belarusCollage = [
+  [
+    '🎓 My academic journey began here — ',
+    { tag: "<a href='https://www.brsu.by/en' target='_blank'>Brest State A.S. Pushkin University</a>" },
+    '.',
+  ],
+  ['I studied applied mathematics from 2002 to 2007, earning the title of mathematician-programmer.'],
+  ['It was a rigorous program — math, algorithms, programming theory — all the good stuff.'],
+  ['These studies taught me to think analytically and build solutions that are not only functional, but elegant.'],
+];
+
+export const roomDialodues = { belarus, belarusHome, belarusWork, belarusCollage };

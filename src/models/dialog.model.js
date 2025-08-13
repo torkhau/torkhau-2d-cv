@@ -24,7 +24,7 @@ export class Dialog {
   }
 
   show(dialogueText = []) {
-    if (dialogueText.length === 0 && this.#text.length === 0) return;
+    if (dialogueText.length === 0) return;
 
     this.#playerController.paused(true);
     this.#dialogBox.setAttribute('tabindex', '0');

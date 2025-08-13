@@ -3,8 +3,9 @@ const certificate = (url) => [
   { tag: `<a href='${url}' target='_blank'>certificate</a>` },
   ' and explore my full ',
   {
-    tag: "<a href='https://drive.google.com/file/d/1aLBDmk-vTRyNdmSm2YFwUPrM8YxYRN_G/view?usp=drive_link' target='_blank'>CV</a>.",
+    tag: "<a href='https://drive.google.com/file/d/1NgGZAPLvwizjebE0EZ2AHiLNtFWJIZSS/view?usp=drive_link' target='_blank'>CV</a>",
   },
+  '.',
 ];
 
 const certificate1 = [
@@ -20,9 +21,24 @@ const certificate2 = [
 ];
 
 const certificate3 = [
-  ['🛠️ This one’s fresh — NodeJS course at RS School, 2025.'],
+  ["🛠️ This one's fresh — NodeJS course at RS School, 2025."],
   ['It covered REST APIs, WebSockets, GraphQL, and NestJS.'],
   certificate('https://drive.google.com/file/d/1xBe9qYdNvuATVakQBQ3SeBJ-LGikdeFl/view?usp=drive_link'),
 ];
 
-export const interactiveDialodues = { certificate1, certificate2, certificate3 };
+const workPlace = [
+  ['💻 And this… this is my old desk.'],
+  ['Countless cups of coffee and even more lines of code were born right here.'],
+];
+
+const homeWorkPlace = [
+  ['🖥️ This desk was my command center.'],
+  ['Here, I handled everything — development, consulting, and support — all in one place.'],
+];
+
+const mathIdol = [
+  ['🗿 Meet the Great Mathematician Idol.'],
+  ['We math students used to believe it could solve our problems… sadly, not our deadlines.'],
+];
+
+export const interactiveDialodues = { certificate1, certificate2, certificate3, workPlace, homeWorkPlace, mathIdol };

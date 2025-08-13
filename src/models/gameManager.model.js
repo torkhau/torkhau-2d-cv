@@ -15,6 +15,7 @@ export class GameManager {
       'belarus',
       'belarusHome',
       'belarusWork',
+      'belarusCollage',
       'poland',
     ]);
 
