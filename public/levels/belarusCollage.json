@@ -3,33 +3,33 @@
     {
       "height": 21,
       "type": "rect",
-      "width": 5,
-      "x": 43,
+      "width": 14,
+      "x": 34,
       "y": 160
     },
     {
       "height": 30,
       "type": "rect",
-      "width": 5,
-      "x": 43,
+      "width": 13,
+      "x": 35,
       "y": 114
     },
     {
-      "height": 4,
+      "height": 11,
       "type": "rect",
       "width": 97,
       "x": 47,
-      "y": 113
+      "y": 106
     },
     {
       "height": 48,
       "type": "rect",
-      "width": 4,
-      "x": 140,
+      "width": 9,
+      "x": 135,
       "y": 67
     },
     {
-      "height": 4,
+      "height": 10,
       "type": "rect",
       "width": 273,
       "x": 46,
@@ -38,7 +38,7 @@
     {
       "height": 127,
       "type": "rect",
-      "width": 5,
+      "width": 9,
       "x": 314,
       "y": 52
     },
@@ -69,9 +69,7 @@
       "width": 20,
       "x": 254,
       "y": 50
-    }
-  ],
-  "barriers": [
+    },
     {
       "height": 16,
       "type": "rect",
@@ -169,7 +167,9 @@
       "width": 24,
       "x": 156,
       "y": 163
-    },
+    }
+  ],
+  "barriers": [
     {
       "height": 18,
       "name": "toBelarusFromCollage",

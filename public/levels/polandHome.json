@@ -15,14 +15,14 @@
       "y": 259
     },
     {
-      "height": 3,
+      "height": 10,
       "type": "rect",
       "width": 36,
       "x": 62,
       "y": 273
     },
     {
-      "height": 3,
+      "height": 10,
       "type": "rect",
       "width": 16,
       "x": 110,
@@ -59,23 +59,23 @@
     {
       "height": 23,
       "type": "rect",
-      "width": 3,
+      "width": 6,
       "x": 160,
       "y": 231
     },
     {
       "height": 148,
       "type": "rect",
-      "width": 3,
+      "width": 6,
       "x": 160,
       "y": 51
     },
     {
-      "height": 3,
+      "height": 10,
       "type": "rect",
       "width": 8,
       "x": 153,
-      "y": 61
+      "y": 54
     },
     {
       "height": 18,
@@ -94,23 +94,23 @@
     {
       "height": 85,
       "type": "rect",
-      "width": 2,
-      "x": 45,
+      "width": 6,
+      "x": 41,
       "y": 166
     },
     {
-      "height": 4,
+      "height": 7,
       "type": "rect",
       "width": 15,
       "x": 68,
-      "y": 156
+      "y": 153
     },
     {
-      "height": 4,
+      "height": 7,
       "type": "rect",
       "width": 16,
       "x": 93,
-      "y": 156
+      "y": 153
     },
     {
       "height": 6,
@@ -155,7 +155,7 @@
       "y": 107
     },
     {
-      "height": 3,
+      "height": 4,
       "type": "rect",
       "width": 77,
       "x": 45,
@@ -164,16 +164,16 @@
     {
       "height": 46,
       "type": "rect",
-      "width": 2,
-      "x": 45,
+      "width": 4,
+      "x": 43,
       "y": 99
     },
     {
-      "height": 3,
+      "height": 6,
       "type": "rect",
       "width": 56,
       "x": 45,
-      "y": 108
+      "y": 105
     },
     {
       "height": 17,
@@ -197,28 +197,28 @@
       "y": 52
     },
     {
-      "height": 3,
+      "height": 11,
       "type": "rect",
       "width": 11,
       "x": 132,
-      "y": 61
+      "y": 53
     },
     {
-      "height": 3,
+      "height": 9,
       "type": "rect",
       "width": 68,
       "x": 46,
-      "y": 61
+      "y": 55
     },
     {
       "height": 38,
       "type": "rect",
-      "width": 2,
-      "x": 45,
+      "width": 4,
+      "x": 43,
       "y": 63
     },
     {
-      "height": 2,
+      "height": 5,
       "type": "rect",
       "width": 81,
       "x": 46,
