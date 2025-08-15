@@ -13,6 +13,7 @@ await Promise.all([
   kCtx.loadSprite('belarusWork', `${levelFolder}/belarusWork.png`),
   kCtx.loadSprite('belarusCollage', `${levelFolder}/belarusCollage.png`),
   kCtx.loadSprite('poland', `${levelFolder}/poland.png`),
+  kCtx.loadSprite('polandHome', `${levelFolder}/polandHome.png`),
   kCtx.loadSprite('player', `${import.meta.env.BASE_URL}player/player.png`, {
     sliceX: 9,
     sliceY: 2,

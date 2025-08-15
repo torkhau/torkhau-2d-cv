@@ -1,3 +1,5 @@
+import { linkToCV } from './const';
+
 const belarus = [
   ['👋 Hi there!', { tag: '<br />' }, 'Welcome to my interactive CV.'],
   ['Instead of reading a boring PDF, you get to play!'],
@@ -19,6 +21,7 @@ const belarusHome = [
   ['It was a time of autonomy, deep problem-solving, and helping clients optimize their workflows.'],
   ['I learned to handle everything — from development to consulting and support.'],
   ['Not just a workplace, but a place where I shaped my engineering mindset.'],
+  ['Want to know more about my early projects? Check my ', linkToCV, '.'],
 ];
 
 const belarusWork = [
@@ -38,4 +41,17 @@ const belarusCollage = [
   ['These studies taught me to think analytically and build solutions that are not only functional, but elegant.'],
 ];
 
-export const roomDialodues = { belarus, belarusHome, belarusWork, belarusCollage };
+const poland = [
+  ['🇵🇱 2022 was a turning point — I moved to Poland, to the city of Bialystok.'],
+  ['Here, I fully transitioned into modern full-stack web development.'],
+  ['New country, new tech stack, and the same passion for creating great software.'],
+  ['You can read the full career story in my ', linkToCV, '.'],
+];
+
+const polandHome = [
+  ['🏠 This is my home in Bialystok.'],
+  ['From here, I work remotely on international projects as a Full-Stack Developer.'],
+  ["It's my base for coding, learning, and building digital products."],
+];
+
+export const roomDialodues = { belarus, belarusHome, belarusWork, belarusCollage, poland, polandHome };

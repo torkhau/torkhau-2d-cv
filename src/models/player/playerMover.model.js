@@ -1,4 +1,6 @@
-import { kCtx, moveTolerance, playerSpeed } from '../../core';
+import { kCtx, playerSpeed } from '../../core';
+
+export const moveTolerance = 0.1 * 16;
 
 export class PlayerMover {
   #player;

@@ -1,4 +1,4 @@
-import { cellSize, interactiveDialodues, kCtx, roomDialodues, spawnPoints } from '../core';
+import { interactiveDialodues, kCtx, roomDialodues, spawnPoints } from '../core';
 import { Dialog } from './dialog.model';
 import { Room } from './room/room.model';
 
@@ -49,7 +49,7 @@ export class RoomManager {
     this.#currentRoom = roomName;
     this.#startRoomDialogue(this.#currentRoom);
     this.#getRoom(this.#currentRoom).display();
-    this.#player.position = kCtx.vec2(x, y).scale(cellSize);
+    this.#player.position = kCtx.vec2(x, y);
   }
 
   #getRoom(roomName) {

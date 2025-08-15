@@ -1,10 +1,10 @@
+import { linkToCV } from './const';
+
 const certificate = (url) => [
   'You can view the ',
   { tag: `<a href='${url}' target='_blank'>certificate</a>` },
   ' and explore my full ',
-  {
-    tag: "<a href='https://drive.google.com/file/d/1NgGZAPLvwizjebE0EZ2AHiLNtFWJIZSS/view?usp=drive_link' target='_blank'>CV</a>",
-  },
+  linkToCV,
   '.',
 ];
 
@@ -41,4 +41,27 @@ const mathIdol = [
   ['We math students used to believe it could solve our problems… sadly, not our deadlines.'],
 ];
 
-export const interactiveDialodues = { certificate1, certificate2, certificate3, workPlace, homeWorkPlace, mathIdol };
+const ATS = [
+  ['💻 This desk takes me back to 2021–2023.'],
+  ['I worked at Accessible Travel Solutions as a Full-Stack Developer.'],
+  ['I built and optimized a scalable PERN stack app, improving UX and performance.'],
+  ['You can explore more details in my ', linkToCV, '.'],
+];
+
+const SI = [
+  ['💻 This is where the next chapter began in 2023.'],
+  ['Our Accessible Travel Solutions project moved here, to Sage Inclusion.'],
+  ['Same product, same team — now independent for certification purposes.'],
+  ['You can explore more details in my ', linkToCV, '.'],
+];
+
+export const interactiveDialodues = {
+  certificate1,
+  certificate2,
+  certificate3,
+  workPlace,
+  homeWorkPlace,
+  mathIdol,
+  ATS,
+  SI,
+};

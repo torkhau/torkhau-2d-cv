@@ -17,6 +17,7 @@ export class GameManager {
       'belarusWork',
       'belarusCollage',
       'poland',
+      'polandHome'
     ]);
 
     new ZoomController();
